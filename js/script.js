@@ -1,22 +1,38 @@
 // ============================================
-// 🍔 MR. LUCKY MENU DATA (EASY TO EDIT)
+// 🍜 KHIDMAT KATERING KELANTAN - MENU DATA
 // ============================================
 const menuItems = [
-  // BURGERS & MAINS
-  { name: "Lucky Double Smash", category: "Burgers & Mains", price: 14.99, desc: "Two beef patties, American cheese, special sauce, pickles, onion", image: "https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=400" },
-  { name: "Crispy Chicken Sandwich", category: "Burgers & Mains", price: 12.99, desc: "Buttermilk fried chicken, spicy mayo, slaw, brioche bun", image: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400" },
-  { name: "BBQ Bacon Burger", category: "Burgers & Mains", price: 15.99, desc: "Angus beef, smoked bacon, cheddar, BBQ sauce, onion rings", image: "https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400" },
-  { name: "Veggie Power Bowl", category: "Burgers & Mains", price: 11.99, desc: "Quinoa, roasted veggies, avocado, tahini dressing", image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400" },
-  // SIDES
-  { name: "Truffle Parmesan Fries", category: "Sides", price: 6.99, desc: "Crispy fries, truffle oil, parmesan, herbs", image: "https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=400" },
-  { name: "Mac & Cheese Bites", category: "Sides", price: 7.99, desc: "Crispy fried mac & cheese, sriracha ranch", image: "https://images.unsplash.com/photo-1541520964328-22d8b8ed1ac5?w=400" },
-  { name: "Onion Rings", category: "Sides", price: 5.99, desc: "Beer-battered, served with chipotle mayo", image: "https://images.unsplash.com/photo-1639024471283-03518883512d?w=400" },
-  // DESSERTS
-  { name: "Chocolate Lava Cake", category: "Desserts", price: 8.99, desc: "Warm chocolate cake, molten center, vanilla ice cream", image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400" },
-  { name: "Strawberry Cheesecake", category: "Desserts", price: 7.99, desc: "New York style, fresh strawberries", image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=400" },
-  // DRINKS
-  { name: "Fresh Lemonade", category: "Drinks", price: 3.99, desc: "Classic or strawberry", image: "https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=400" },
-  { name: "Iced Tea", category: "Drinks", price: 2.99, desc: "Unsweetened or sweet", image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400" },
+  // Air Balang Mewah
+  { name: "Air Balang Mewah (10L)", category: "Air Balang Mewah", price: 45.00, desc: "Sirap Limau, Bandung, Asam Boi, Mata Kucing", image: "https://images.unsplash.com/photo-1546173159-7b5e1f8b8b8b?w=400" },
+  { name: "Air Balang Premium (15L)", category: "Air Balang Mewah", price: 65.00, desc: "Pilihan rasa premium: Laici, Anggur, Lemon Tea", image: "https://images.unsplash.com/photo-1582106682436-3c9c3c8b3b8b?w=400" },
+  
+  // Aiskrim
+  { name: "Aiskrim Malaysia (scoop)", category: "Aiskrim", price: 3.50, desc: "Perisa jagung, cendol, durian, pulut hitam", image: "https://images.unsplash.com/photo-1582716401301-8b8b8b8b8b8?w=400" },
+  { name: "Aiskrim Goreng", category: "Aiskrim", price: 5.00, desc: "Aiskrim vanila bersalut roti, digoreng rangup", image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400" },
+
+  // Lokching
+  { name: "Lokching (10 cucuk)", category: "Lokching", price: 18.00, desc: "Fishball, crab stick, bebola ayam, sosej", image: "https://images.unsplash.com/photo-1604908176992-8b8b8b8b8b8?w=400" },
+  { name: "Lokching Special Set", category: "Lokching", price: 35.00, desc: "20 cucuk + kuah kacang & sambal kicap", image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400" },
+
+  // Mee Celup
+  { name: "Mee Celup (set)", category: "Mee Celup", price: 28.00, desc: "Mee kuning, tauhu, telur, sayur, kuah asam pedas", image: "https://images.unsplash.com/photo-1555126634-323283e543fa?w=400" },
+  { name: "Mee Celup + Daging", category: "Mee Celup", price: 38.00, desc: "Mee celup dengan hirisan daging lembu segar", image: "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc5e?w=400" },
+
+  // Apam Balik
+  { name: "Apam Balik Biasa", category: "Apam Balik", price: 2.50, desc: "Kacang tanah, jagung, gula", image: "https://images.unsplash.com/photo-1587132137056-8b8b8b8b8b8?w=400" },
+  { name: "Apam Balik Special", category: "Apam Balik", price: 4.00, desc: "Kacang, jagung, coklat, keju", image: "https://images.unsplash.com/photo-1596560548464-8b8b8b8b8b8?w=400" },
+
+  // Kambing Golek
+  { name: "Kambing Golek (seekor)", category: "Kambing Golek", price: 1400.00, desc: "Termasuk nasi arab, kuah kari, acar, sayur", image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400" },
+  { name: "Nasi Arab Kambing (pack)", category: "Kambing Golek", price: 12.00, desc: "Nasi arab + daging kambing golek + acar", image: "https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?w=400" },
+
+  // Dessert Table
+  { name: "Dessert Table Basic", category: "Dessert Table", price: 250.00, desc: "6 jenis kuih muih + 2 jenis kek", image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400" },
+  { name: "Dessert Table Premium", category: "Dessert Table", price: 450.00, desc: "10 jenis pencuci mulut + hiasan tema", image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=400" },
+
+  // Candy Wall
+  { name: "Candy Wall Setup (asas)", category: "Candy Wall", price: 180.00, desc: "Papan candy + 5 jenis gula-gula", image: "https://images.unsplash.com/photo-1599623560574-39d4b4b4b4b4?w=400" },
+  { name: "Candy Wall Deluxe", category: "Candy Wall", price: 350.00, desc: "Setup penuh + 12 jenis gula-gula + bekas comel", image: "https://images.unsplash.com/photo-1596560548464-8b8b8b8b8b8?w=400" }
 ];
 
 // ============================================
@@ -34,7 +50,7 @@ function getCategories() {
 function renderTabs() {
   const tabsContainer = document.getElementById('categoryTabs');
   const categories = getCategories();
-  let html = `<button class="cat-btn active" data-cat="all">All</button>`;
+  let html = `<button class="cat-btn active" data-cat="all">Semua</button>`;
   categories.forEach(cat => {
     html += `<button class="cat-btn" data-cat="${cat}">${cat}</button>`;
   });
@@ -61,8 +77,8 @@ function renderMenu(category = null) {
         <div class="menu-info">
           <h4>${item.name}</h4>
           <p class="menu-desc">${item.desc}</p>
-          <div class="menu-price">$${item.price.toFixed(2)}</div>
-          <button class="btn-order" data-item='${JSON.stringify(item)}'>Add to order <i class="fas fa-plus-circle"></i></button>
+          <div class="menu-price">RM${item.price.toFixed(2)}</div>
+          <button class="btn-order" data-item='${JSON.stringify(item)}'>Tambah <i class="fas fa-plus-circle"></i></button>
         </div>
       </div>
     `;
@@ -96,8 +112,8 @@ function updateCartUI() {
   const orderDetailsInput = document.getElementById('orderDetails');
 
   if (cart.length === 0) {
-    cartDiv.innerHTML = '<p class="empty-cart">Your cart is empty. Add some delicious items!</p>';
-    totalSpan.textContent = '$0';
+    cartDiv.innerHTML = '<p class="empty-cart">Tiada item. Sila pilih menu di atas.</p>';
+    totalSpan.textContent = 'RM0';
     orderDetailsInput.value = '';
     return;
   }
@@ -112,15 +128,15 @@ function updateCartUI() {
           <i class="fas fa-times-circle" onclick="removeFromCart(${idx})" style="cursor:pointer;"></i>
           <span class="cart-item-name">${item.name}</span>
         </div>
-        <span class="cart-item-price">$${item.price.toFixed(2)}</span>
+        <span class="cart-item-price">RM${item.price.toFixed(2)}</span>
       </div>
     `;
   });
   cartDiv.innerHTML = html;
-  totalSpan.textContent = `$${total.toFixed(2)}`;
+  totalSpan.textContent = `RM${total.toFixed(2)}`;
 
-  const orderSummary = cart.map(i => `${i.name} ($${i.price.toFixed(2)})`).join(', ');
-  orderDetailsInput.value = `Items: ${orderSummary} | Total: $${total.toFixed(2)}`;
+  const orderSummary = cart.map(i => `${i.name} (RM${i.price.toFixed(2)})`).join(', ');
+  orderDetailsInput.value = `Pesanan: ${orderSummary} | Jumlah: RM${total.toFixed(2)}`;
 }
 
 window.removeFromCart = removeFromCart;
@@ -138,20 +154,20 @@ function setupForm() {
     e.preventDefault();
 
     if (cart.length === 0) {
-      statusDiv.innerHTML = '<span class="error">⚠️ Please add at least one item to your order.</span>';
+      statusDiv.innerHTML = '<span class="error">⚠️ Sila pilih sekurang-kurangnya satu item.</span>';
       return;
     }
 
-    statusDiv.innerHTML = '<span style="color:#da291c;">Sending your order...</span>';
+    statusDiv.innerHTML = '<span style="color:#da291c;">Menghantar tempahan...</span>';
 
     const formData = {
       name: document.getElementById('name').value,
       email: document.getElementById('email').value,
       phone: document.getElementById('phone').value,
-      eventDate: document.getElementById('eventDate').value || 'Not specified',
-      notes: document.getElementById('notes').value || 'None',
+      eventDate: document.getElementById('eventDate').value || 'Tidak dinyatakan',
+      notes: document.getElementById('notes').value || 'Tiada',
       orderDetails: document.getElementById('orderDetails').value,
-      timestamp: new Date().toLocaleString()
+      timestamp: new Date().toLocaleString('ms-MY')
     };
 
     fetch(GOOGLE_SCRIPT_URL, {
@@ -161,14 +177,14 @@ function setupForm() {
       body: new URLSearchParams(formData).toString()
     })
     .then(() => {
-      statusDiv.innerHTML = '<span class="success">✨ Order sent! We’ll contact you shortly to confirm.</span>';
+      statusDiv.innerHTML = '<span class="success">✨ Tempahan diterima! Kami akan hubungi anda segera.</span>';
       form.reset();
       cart = [];
       updateCartUI();
     })
     .catch(error => {
       console.error(error);
-      statusDiv.innerHTML = '<span class="error">❌ Error. Please try again or call us.</span>';
+      statusDiv.innerHTML = '<span class="error">❌ Ralat. Sila cuba lagi atau hubungi 010-944 1083.</span>';
     });
   });
 }

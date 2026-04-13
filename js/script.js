@@ -40,7 +40,6 @@ function renderTabs() {
   });
   tabsContainer.innerHTML = html;
 
-  // Add event listeners
   document.querySelectorAll('.cat-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
@@ -58,9 +57,7 @@ function renderMenu(category = null) {
   filtered.forEach(item => {
     html += `
       <div class="menu-card">
-        <div class="menu-img">
-          <img src="${item.image}" alt="${item.name}" loading="lazy">
-        </div>
+        <div class="menu-img"><img src="${item.image}" alt="${item.name}" loading="lazy"></div>
         <div class="menu-info">
           <h4>${item.name}</h4>
           <p class="menu-desc">${item.desc}</p>
@@ -72,7 +69,6 @@ function renderMenu(category = null) {
   });
   grid.innerHTML = html;
 
-  // Attach event listeners to "Add to order" buttons
   document.querySelectorAll('.btn-order').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const item = JSON.parse(btn.dataset.item);
@@ -123,18 +119,16 @@ function updateCartUI() {
   cartDiv.innerHTML = html;
   totalSpan.textContent = `$${total.toFixed(2)}`;
 
-  // Prepare order details string for Google Sheets
   const orderSummary = cart.map(i => `${i.name} ($${i.price.toFixed(2)})`).join(', ');
   orderDetailsInput.value = `Items: ${orderSummary} | Total: $${total.toFixed(2)}`;
 }
 
-// Expose remove function globally for onclick
 window.removeFromCart = removeFromCart;
 
 // ============================================
-// GOOGLE SHEETS INTEGRATION
+// GOOGLE SHEETS INTEGRATION (URL PRE-FILLED)
 // ============================================
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxU4FSnQ7K19pn4gOJdgP2l01lQ-G_QeuShFghmpXN5sFPSaFSToeolLg_Gq-ZVpIjD/exec'; // ⬅️ PASTE YOUR URL HERE
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxU4FSnQ7K19pn4gOJdgP2l01lQ-G_QeuShFghmpXN5sFPSaFSToeolLg_Gq-ZVpIjD/exec';
 
 function setupForm() {
   const form = document.getElementById('orderForm');
@@ -142,11 +136,6 @@ function setupForm() {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-
-    if (GOOGLE_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbxU4FSnQ7K19pn4gOJdgP2l01lQ-G_QeuShFghmpXN5sFPSaFSToeolLg_Gq-ZVpIjD/exec') {
-      statusDiv.innerHTML = '<span class="error">⚠️ Set your Google Script URL in js/script.js</span>';
-      return;
-    }
 
     if (cart.length === 0) {
       statusDiv.innerHTML = '<span class="error">⚠️ Please add at least one item to your order.</span>';
@@ -185,7 +174,7 @@ function setupForm() {
 }
 
 // ============================================
-// MOBILE MENU & MISC
+// MOBILE MENU
 // ============================================
 function setupMobileMenu() {
   const hamburger = document.getElementById('hamburger');
@@ -210,7 +199,7 @@ function setupMobileMenu() {
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
   renderTabs();
-  renderMenu(); // All items
+  renderMenu();
   updateCartUI();
   setupForm();
   setupMobileMenu();

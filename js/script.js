@@ -1,54 +1,61 @@
 // ============================================
-// 🍀 MR. LUCKY CATERING – MODULAR MENU DATA
+// 🍔 MR. LUCKY MENU DATA (EASY TO EDIT)
 // ============================================
-// Edit the array below to add, remove, or change menu items.
-// Each item needs: name, description, price, image (URL)
-// ============================================
-
 const menuItems = [
-  {
-    name: "Lucky Greens",
-    description: "Heirloom tomatoes, burrata, basil oil, aged balsamic · gluten-free",
-    price: "market price",
-    image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-  },
-  {
-    name: "Heritage Lamb",
-    description: "Herb crust, roasted garlic purée, rosemary jus, seasonal vegetables",
-    price: "per guest",
-    image: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-  },
-  {
-    name: "Golden Brûlée",
-    description: "Tahitian vanilla bean, caramelized sugar, seasonal berries",
-    price: "dessert station",
-    image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-  },
-  // 👇 ADD MORE MENU ITEMS BELOW THIS LINE 👇
-  {
-    name: "Truffle Risotto",
-    description: "Arborio rice, wild mushrooms, parmesan, white truffle oil",
-    price: "per person",
-    image: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-  },
-  {
-    name: "Seared Scallops",
-    description: "Pan-seared diver scallops, cauliflower purée, crispy prosciutto",
-    price: "market price",
-    image: "https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-  }
-  // Add as many as you like – they will automatically appear in a 3‑column grid.
+  // BURGERS & MAINS
+  { name: "Lucky Double Smash", category: "Burgers & Mains", price: 14.99, desc: "Two beef patties, American cheese, special sauce, pickles, onion", image: "https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=400" },
+  { name: "Crispy Chicken Sandwich", category: "Burgers & Mains", price: 12.99, desc: "Buttermilk fried chicken, spicy mayo, slaw, brioche bun", image: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400" },
+  { name: "BBQ Bacon Burger", category: "Burgers & Mains", price: 15.99, desc: "Angus beef, smoked bacon, cheddar, BBQ sauce, onion rings", image: "https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400" },
+  { name: "Veggie Power Bowl", category: "Burgers & Mains", price: 11.99, desc: "Quinoa, roasted veggies, avocado, tahini dressing", image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400" },
+  // SIDES
+  { name: "Truffle Parmesan Fries", category: "Sides", price: 6.99, desc: "Crispy fries, truffle oil, parmesan, herbs", image: "https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=400" },
+  { name: "Mac & Cheese Bites", category: "Sides", price: 7.99, desc: "Crispy fried mac & cheese, sriracha ranch", image: "https://images.unsplash.com/photo-1541520964328-22d8b8ed1ac5?w=400" },
+  { name: "Onion Rings", category: "Sides", price: 5.99, desc: "Beer-battered, served with chipotle mayo", image: "https://images.unsplash.com/photo-1639024471283-03518883512d?w=400" },
+  // DESSERTS
+  { name: "Chocolate Lava Cake", category: "Desserts", price: 8.99, desc: "Warm chocolate cake, molten center, vanilla ice cream", image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400" },
+  { name: "Strawberry Cheesecake", category: "Desserts", price: 7.99, desc: "New York style, fresh strawberries", image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=400" },
+  // DRINKS
+  { name: "Fresh Lemonade", category: "Drinks", price: 3.99, desc: "Classic or strawberry", image: "https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=400" },
+  { name: "Iced Tea", category: "Drinks", price: 2.99, desc: "Unsweetened or sweet", image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400" },
 ];
 
 // ============================================
-// RENDER MENU CARDS (DYNAMIC)
+// CART STATE
 // ============================================
-function renderMenu() {
-  const menuGrid = document.getElementById('menuGrid');
-  if (!menuGrid) return;
+let cart = [];
 
+// ============================================
+// RENDER CATEGORY TABS & MENU
+// ============================================
+function getCategories() {
+  return [...new Set(menuItems.map(item => item.category))];
+}
+
+function renderTabs() {
+  const tabsContainer = document.getElementById('categoryTabs');
+  const categories = getCategories();
+  let html = `<button class="cat-btn active" data-cat="all">All</button>`;
+  categories.forEach(cat => {
+    html += `<button class="cat-btn" data-cat="${cat}">${cat}</button>`;
+  });
+  tabsContainer.innerHTML = html;
+
+  // Add event listeners
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const category = btn.dataset.cat;
+      renderMenu(category === 'all' ? null : category);
+    });
+  });
+}
+
+function renderMenu(category = null) {
+  const grid = document.getElementById('menuGrid');
+  const filtered = category ? menuItems.filter(i => i.category === category) : menuItems;
   let html = '';
-  menuItems.forEach(item => {
+  filtered.forEach(item => {
     html += `
       <div class="menu-card">
         <div class="menu-img">
@@ -56,72 +63,105 @@ function renderMenu() {
         </div>
         <div class="menu-info">
           <h4>${item.name}</h4>
-          <p>${item.description}</p>
-          <span class="price">${item.price}</span>
+          <p class="menu-desc">${item.desc}</p>
+          <div class="menu-price">$${item.price.toFixed(2)}</div>
+          <button class="btn-order" data-item='${JSON.stringify(item)}'>Add to order <i class="fas fa-plus-circle"></i></button>
         </div>
       </div>
     `;
   });
-  menuGrid.innerHTML = html;
-}
+  grid.innerHTML = html;
 
-// ============================================
-// MOBILE MENU TOGGLE
-// ============================================
-function setupMobileMenu() {
-  const hamburger = document.getElementById('hamburger');
-  const navLinks = document.getElementById('navLinks');
-  if (!hamburger || !navLinks) return;
-
-  hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    const icon = hamburger.querySelector('i');
-    if (navLinks.classList.contains('active')) {
-      icon.classList.remove('fa-bars');
-      icon.classList.add('fa-times');
-    } else {
-      icon.classList.remove('fa-times');
-      icon.classList.add('fa-bars');
-    }
-  });
-
-  // Close menu when a link is clicked
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('active');
-      const icon = hamburger.querySelector('i');
-      icon.classList.remove('fa-times');
-      icon.classList.add('fa-bars');
+  // Attach event listeners to "Add to order" buttons
+  document.querySelectorAll('.btn-order').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const item = JSON.parse(btn.dataset.item);
+      addToCart(item);
     });
   });
 }
 
 // ============================================
-// GOOGLE SHEETS FORM SUBMISSION
+// CART FUNCTIONS
 // ============================================
-// ⚠️ PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL BELOW ⚠️
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxU4FSnQ7K19pn4gOJdgP2l01lQ-G_QeuShFghmpXN5sFPSaFSToeolLg_Gq-ZVpIjD/exec';
+function addToCart(item) {
+  cart.push({ ...item });
+  updateCartUI();
+}
+
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  updateCartUI();
+}
+
+function updateCartUI() {
+  const cartDiv = document.getElementById('cartItems');
+  const totalSpan = document.getElementById('cartTotal');
+  const orderDetailsInput = document.getElementById('orderDetails');
+
+  if (cart.length === 0) {
+    cartDiv.innerHTML = '<p class="empty-cart">Your cart is empty. Add some delicious items!</p>';
+    totalSpan.textContent = '$0';
+    orderDetailsInput.value = '';
+    return;
+  }
+
+  let html = '';
+  let total = 0;
+  cart.forEach((item, idx) => {
+    total += item.price;
+    html += `
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <i class="fas fa-times-circle" onclick="removeFromCart(${idx})" style="cursor:pointer;"></i>
+          <span class="cart-item-name">${item.name}</span>
+        </div>
+        <span class="cart-item-price">$${item.price.toFixed(2)}</span>
+      </div>
+    `;
+  });
+  cartDiv.innerHTML = html;
+  totalSpan.textContent = `$${total.toFixed(2)}`;
+
+  // Prepare order details string for Google Sheets
+  const orderSummary = cart.map(i => `${i.name} ($${i.price.toFixed(2)})`).join(', ');
+  orderDetailsInput.value = `Items: ${orderSummary} | Total: $${total.toFixed(2)}`;
+}
+
+// Expose remove function globally for onclick
+window.removeFromCart = removeFromCart;
+
+// ============================================
+// GOOGLE SHEETS INTEGRATION
+// ============================================
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxU4FSnQ7K19pn4gOJdgP2l01lQ-G_QeuShFghmpXN5sFPSaFSToeolLg_Gq-ZVpIjD/exec'; // ⬅️ PASTE YOUR URL HERE
 
 function setupForm() {
-  const form = document.getElementById('cateringForm');
+  const form = document.getElementById('orderForm');
   const statusDiv = document.getElementById('formStatus');
-  if (!form) return;
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
     if (GOOGLE_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbxU4FSnQ7K19pn4gOJdgP2l01lQ-G_QeuShFghmpXN5sFPSaFSToeolLg_Gq-ZVpIjD/exec') {
-      statusDiv.innerHTML = '<span class="error">⚠️ Please set your Google Script URL in js/script.js.</span>';
+      statusDiv.innerHTML = '<span class="error">⚠️ Set your Google Script URL in js/script.js</span>';
       return;
     }
 
-    statusDiv.innerHTML = '<span style="color:#d4a843;">Sending inquiry...</span>';
+    if (cart.length === 0) {
+      statusDiv.innerHTML = '<span class="error">⚠️ Please add at least one item to your order.</span>';
+      return;
+    }
+
+    statusDiv.innerHTML = '<span style="color:#da291c;">Sending your order...</span>';
 
     const formData = {
       name: document.getElementById('name').value,
       email: document.getElementById('email').value,
       phone: document.getElementById('phone').value,
-      details: document.getElementById('details').value,
+      eventDate: document.getElementById('eventDate').value || 'Not specified',
+      notes: document.getElementById('notes').value || 'None',
+      orderDetails: document.getElementById('orderDetails').value,
       timestamp: new Date().toLocaleString()
     };
 
@@ -132,36 +172,46 @@ function setupForm() {
       body: new URLSearchParams(formData).toString()
     })
     .then(() => {
-      statusDiv.innerHTML = '<span class="success">✨ Thank you! Your inquiry has been sent. We’ll be in touch soon.</span>';
+      statusDiv.innerHTML = '<span class="success">✨ Order sent! We’ll contact you shortly to confirm.</span>';
       form.reset();
+      cart = [];
+      updateCartUI();
     })
     .catch(error => {
-      console.error('Error:', error);
-      statusDiv.innerHTML = '<span class="error">❌ Oops! Something went wrong. Please try again or email us directly.</span>';
+      console.error(error);
+      statusDiv.innerHTML = '<span class="error">❌ Error. Please try again or call us.</span>';
     });
   });
 }
 
 // ============================================
-// STICKY HEADER BACKGROUND (COSMETIC)
+// MOBILE MENU & MISC
 // ============================================
-function setupHeaderScroll() {
-  window.addEventListener('scroll', () => {
-    const header = document.querySelector('header');
-    if (window.scrollY > 50) {
-      header.style.background = 'rgba(255,255,255,0.9)';
-    } else {
-      header.style.background = 'rgba(255,255,255,0.85)';
-    }
+function setupMobileMenu() {
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    const icon = hamburger.querySelector('i');
+    icon.classList.toggle('fa-bars');
+    icon.classList.toggle('fa-times');
+  });
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('active');
+      hamburger.querySelector('i').classList.add('fa-bars');
+      hamburger.querySelector('i').classList.remove('fa-times');
+    });
   });
 }
 
 // ============================================
-// INITIALIZE EVERYTHING ON PAGE LOAD
+// INIT
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
-  renderMenu();
-  setupMobileMenu();
+  renderTabs();
+  renderMenu(); // All items
+  updateCartUI();
   setupForm();
-  setupHeaderScroll();
+  setupMobileMenu();
 });

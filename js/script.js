@@ -2,11 +2,15 @@
 // CONFIGURATION
 // ============================================
 const API_URL = 'https://script.google.com/macros/s/AKfycbxU4FSnQ7K19pn4gOJdgP2l01lQ-G_QeuShFghmpXN5sFPSaFSToeolLg_Gq-ZVpIjD/exec';
+const IMGBB_API_KEY = '886868f3fbb7fc9caefcd3069644ffa9'; // ✅ Your actual key
+const ADMIN_PASSWORD = 'lucky2024';
 
 let menuItems = [];
 let cart = [];
+let isAdmin = false;
+let clickCount = 0;
 
-// DOM elements
+// DOM elements (existing)
 const menuGrid = document.getElementById('menuGridShop');
 const categoryPills = document.getElementById('categoryPills');
 const cartCountSpan = document.getElementById('cartCount');
@@ -20,6 +24,30 @@ const cartTotalSide = document.getElementById('cartTotalSide');
 const orderDetailsInput = document.getElementById('orderDetails');
 const searchInput = document.getElementById('searchInput');
 
+// Admin DOM elements
+const loginModalOverlay = document.getElementById('loginModalOverlay');
+const adminPanelOverlay = document.getElementById('adminPanelOverlay');
+const adminTrigger = document.getElementById('adminTrigger');
+const closeLoginModal = document.getElementById('closeLoginModal');
+const closeAdminPanel = document.getElementById('closeAdminPanel');
+const loginBtn = document.getElementById('loginBtn');
+const adminPassword = document.getElementById('adminPassword');
+const loginError = document.getElementById('loginError');
+const saveAdminItemBtn = document.getElementById('saveAdminItem');
+const cancelAdminForm = document.getElementById('cancelAdminForm');
+const refreshAdminItemsBtn = document.getElementById('refreshAdminItems');
+const adminItemsTable = document.getElementById('adminItemsTable');
+const adminItemId = document.getElementById('adminItemId');
+const adminItemName = document.getElementById('adminItemName');
+const adminItemCategory = document.getElementById('adminItemCategory');
+const adminItemPrice = document.getElementById('adminItemPrice');
+const adminItemMinQty = document.getElementById('adminItemMinQty');
+const adminItemDesc = document.getElementById('adminItemDesc');
+const adminItemImage = document.getElementById('adminItemImage');
+const imageUpload = document.getElementById('imageUpload');
+const uploadStatus = document.getElementById('uploadStatus');
+const adminCategoryList = document.getElementById('adminCategoryList');
+
 // ============================================
 // FETCH MENU FROM GOOGLE SHEETS
 // ============================================
@@ -29,6 +57,7 @@ async function fetchMenu() {
     menuItems = await response.json();
     renderCategoryPills();
     renderMenuGrid(menuItems);
+    updateAdminCategoryDatalist();
   } catch (error) {
     console.error('Gagal memuatkan menu:', error);
     menuGrid.innerHTML = '<p class="empty-cart">Menu tidak dapat dimuatkan. Sila cuba lagi.</p>';
@@ -92,7 +121,7 @@ function renderMenuGrid(items) {
 }
 
 // ============================================
-// CART LOGIC (with minQty enforcement)
+// CART LOGIC
 // ============================================
 function addToCart(item) {
   let quantity = item.minQty || 1;
@@ -191,7 +220,7 @@ function closeDrawer() {
 }
 
 // ============================================
-// FORM SUBMISSION (with location validation)
+// FORM SUBMISSION
 // ============================================
 function setupForm() {
   const form = document.getElementById('orderForm');
@@ -199,7 +228,6 @@ function setupForm() {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     
-    // Location validation (Kelantan coverage)
     const locationInput = document.getElementById('location');
     const locationValue = locationInput.value.trim().toLowerCase();
     const excluded = ['jeli', 'gua musang', 'kuala krai', 'guamusang', 'kualakrai'];
@@ -244,7 +272,118 @@ function setupForm() {
 }
 
 // ============================================
-// UI SETUP
+// ADMIN FUNCTIONS
+// ============================================
+function updateAdminCategoryDatalist() {
+  const categories = [...new Set(menuItems.map(i => i.category))];
+  adminCategoryList.innerHTML = categories.map(c => `<option value="${c}">`).join('');
+}
+
+async function loadAdminItems() {
+  await fetchMenu();
+  renderAdminTable();
+}
+
+function renderAdminTable() {
+  let html = '';
+  menuItems.forEach(item => {
+    html += `<tr>
+      <td><strong>${item.name}</strong><br><small>${item.description || ''}</small></td>
+      <td>RM ${parseFloat(item.price).toFixed(2)}</td>
+      <td class="actions">
+        <i class="fas fa-edit" onclick="editAdminItem('${item.id}')"></i>
+        <i class="fas fa-trash-alt" onclick="deleteAdminItem('${item.id}')"></i>
+      </td>
+    </tr>`;
+  });
+  adminItemsTable.innerHTML = html || '<tr><td colspan="3">Tiada item.</td></tr>';
+}
+
+function clearAdminForm() {
+  adminItemId.value = '';
+  adminItemName.value = '';
+  adminItemCategory.value = '';
+  adminItemPrice.value = '';
+  adminItemMinQty.value = '1';
+  adminItemDesc.value = '';
+  adminItemImage.value = '';
+  uploadStatus.innerHTML = '';
+}
+
+window.editAdminItem = function(id) {
+  const item = menuItems.find(i => i.id === id);
+  if (!item) return;
+  adminItemId.value = item.id;
+  adminItemName.value = item.name;
+  adminItemCategory.value = item.category;
+  adminItemPrice.value = item.price;
+  adminItemMinQty.value = item.minQty || 1;
+  adminItemDesc.value = item.description || '';
+  adminItemImage.value = item.image || '';
+};
+
+window.deleteAdminItem = async function(id) {
+  if (!confirm('Padam item ini?')) return;
+  const formData = new URLSearchParams();
+  formData.append('action', 'delete');
+  formData.append('id', id);
+  await fetch(API_URL, { method: 'POST', body: formData });
+  await loadAdminItems();
+};
+
+async function saveAdminItem() {
+  const id = adminItemId.value;
+  const name = adminItemName.value.trim();
+  const category = adminItemCategory.value.trim();
+  const price = adminItemPrice.value;
+  const minQty = adminItemMinQty.value || '1';
+  const desc = adminItemDesc.value.trim();
+  const image = adminItemImage.value.trim();
+
+  if (!name || !category || !price) {
+    alert('Sila isi Nama, Kategori, dan Harga.');
+    return;
+  }
+
+  const formData = new URLSearchParams();
+  formData.append('action', id ? 'update' : 'add');
+  if (id) formData.append('id', id);
+  formData.append('name', name);
+  formData.append('category', category);
+  formData.append('price', price);
+  formData.append('minQty', minQty);
+  formData.append('description', desc);
+  formData.append('image', image);
+
+  await fetch(API_URL, { method: 'POST', body: formData });
+  await loadAdminItems();
+  clearAdminForm();
+}
+
+// Image upload to ImgBB
+async function uploadImage(file) {
+  const formData = new FormData();
+  formData.append('image', file);
+  try {
+    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    if (data.success) {
+      return data.data.url;
+    } else {
+      throw new Error('Upload failed');
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Gagal memuat naik imej.');
+    return null;
+  }
+}
+
+// ============================================
+// UI SETUP (including admin triggers)
 // ============================================
 function setupUI() {
   document.getElementById('menuToggle').addEventListener('click', () => {
@@ -260,6 +399,56 @@ function setupUI() {
   searchInput.addEventListener('input', () => {
     const activeCat = document.querySelector('.cat-pill.active')?.dataset.cat || 'all';
     filterAndRender(activeCat);
+  });
+
+  // Hidden admin trigger (click lock icon 3 times)
+  adminTrigger.addEventListener('click', () => {
+    clickCount++;
+    if (clickCount >= 3) {
+      clickCount = 0;
+      loginModalOverlay.classList.add('active');
+      adminPassword.value = '';
+      loginError.innerHTML = '';
+    }
+    setTimeout(() => { clickCount = 0; }, 1000);
+  });
+
+  // Login
+  loginBtn.addEventListener('click', () => {
+    if (adminPassword.value === ADMIN_PASSWORD) {
+      isAdmin = true;
+      loginModalOverlay.classList.remove('active');
+      adminPanelOverlay.classList.add('active');
+      loadAdminItems();
+    } else {
+      loginError.innerHTML = '❌ Kata laluan salah!';
+    }
+  });
+
+  adminPassword.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') loginBtn.click();
+  });
+
+  closeLoginModal.addEventListener('click', () => loginModalOverlay.classList.remove('active'));
+  closeAdminPanel.addEventListener('click', () => adminPanelOverlay.classList.remove('active'));
+
+  // Admin form
+  saveAdminItemBtn.addEventListener('click', saveAdminItem);
+  cancelAdminForm.addEventListener('click', clearAdminForm);
+  refreshAdminItemsBtn.addEventListener('click', loadAdminItems);
+
+  imageUpload.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    uploadStatus.innerHTML = 'Memuat naik...';
+    const url = await uploadImage(file);
+    if (url) {
+      adminItemImage.value = url;
+      uploadStatus.innerHTML = '✅ Imej dimuat naik!';
+    } else {
+      uploadStatus.innerHTML = '';
+    }
+    imageUpload.value = '';
   });
 }
 

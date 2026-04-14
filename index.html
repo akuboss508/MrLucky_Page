@@ -2,11 +2,12 @@
 <html lang="ms">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Khidmat Katering Kelantan · Air Balang Mewah & Kambing Golek</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Mr. Lucky Catering · Air Balang, Kambing Golek & Manisan</title>
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -14,122 +15,128 @@
   <!-- Top Bar -->
   <div class="top-bar">
     <div class="container">
-      <span><i class="fas fa-phone-alt"></i> Tempahan / Tanya: <strong>010-944 1083</strong> · Khidmat Katering Seluruh Kelantan</span>
+      <span><i class="fas fa-map-marker-alt"></i> Khidmat sekitar Kelantan (kecuali Jeli, Gua Musang, Kuala Krai) · <strong>010-944 1083</strong></span>
     </div>
   </div>
 
-  <!-- Header -->
-  <header>
-    <div class="container navbar">
-      <div class="logo">
-        <i class="fas fa-drumstick-bite"></i> Katering Kelantan
+  <!-- Sticky Header -->
+  <header class="header">
+    <div class="container header-container">
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu"><i class="fas fa-bars"></i></button>
+      <div class="logo"><i class="fas fa-drumstick-bite"></i><span>Mr. Lucky<span> Catering</span></span></div>
+      <div class="header-actions">
+        <button class="cart-icon" id="cartIcon"><i class="fas fa-shopping-bag"></i><span class="cart-count" id="cartCount">0</span></button>
       </div>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <i class="fas fa-bars"></i>
-      </button>
-      <nav>
-        <ul class="nav-links" id="navLinks">
-          <li><a href="#home">Utama</a></li>
-          <li><a href="#menu">Menu</a></li>
-          <li><a href="#order">Tempah</a></li>
-          <li><a href="#contact">Hubungi</a></li>
-        </ul>
-      </nav>
     </div>
+    <nav class="mobile-nav" id="mobileNav">
+      <ul>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#contact">Hubungi</a></li>
+        <li><a href="tel:+60109441083"><i class="fas fa-phone-alt"></i> 010-944 1083</a></li>
+      </ul>
+    </nav>
   </header>
 
-  <main>
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-      <div class="container hero-grid">
-        <div class="hero-text">
-          <span class="badge">🍢 KHIDMAT KATERING KELANTAN</span>
-          <h1>Air Balang Mewah<br>Kambing Golek & Manisan</h1>
-          <p>Kami sediakan juadah istimewa untuk majlis perkahwinan, kenduri, korporat dan hari jadi. Lokching, Mee Celup, Apam Balik & Candy Wall pun ada!</p>
-          <div class="hero-buttons">
-            <a href="#menu" class="btn btn-primary">Lihat Menu</a>
-            <a href="#order" class="btn btn-outline-light">Tempah Sekarang</a>
-          </div>
-        </div>
-        <div class="hero-image">
-          <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Kambing Golek dan juadah">
-        </div>
-      </div>
-    </section>
-
-    <!-- Menu Section (Dynamic) -->
-    <section id="menu" class="menu-section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Menu Kami · <span>sedap & berbaloi</span></h2>
-          <div class="divider-red"></div>
-        </div>
-        <div class="category-tabs" id="categoryTabs"></div>
-        <div class="menu-grid" id="menuGrid"></div>
-      </div>
-    </section>
-
-    <!-- Order & Contact Section -->
-    <section id="order" class="order-section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Borang Tempahan · <span>cepat & mudah</span></h2>
-          <div class="divider-red"></div>
-        </div>
-        <div class="order-layout">
-          <div class="order-summary">
-            <h3><i class="fas fa-receipt"></i> Pesanan Anda</h3>
-            <div id="cartItems" class="cart-items">
-              <p class="empty-cart">Tiada item. Sila pilih menu di atas.</p>
-            </div>
-            <div class="cart-total">
-              <span>Anggaran Jumlah:</span>
-              <span id="cartTotal">RM0</span>
-            </div>
-            <p class="cart-note"><i class="fas fa-info-circle"></i> Harga tepat akan dimaklumkan selepas semakan.</p>
-          </div>
-
-          <div class="order-form">
-            <h3><i class="fas fa-user"></i> Maklumat Pelanggan</h3>
-            <form id="orderForm">
-              <div class="form-row">
-                <input type="text" name="name" id="name" placeholder="Nama penuh *" required>
-                <input type="email" name="email" id="email" placeholder="Emel *" required>
-              </div>
-              <div class="form-row">
-                <input type="tel" name="phone" id="phone" placeholder="No. Telefon *" required>
-                <input type="text" name="eventDate" id="eventDate" placeholder="Tarikh majlis (pilihan)">
-              </div>
-              <textarea name="notes" id="notes" rows="3" placeholder="Catatan: jumlah tetamu, lokasi, permintaan khas..."></textarea>
-              <input type="hidden" name="orderDetails" id="orderDetails">
-              <button type="submit" class="btn btn-primary btn-block">Hantar Tempahan <i class="fas fa-paper-plane"></i></button>
-              <div id="formStatus" class="form-status"></div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Bar -->
-    <section id="contact" class="contact-bar">
-      <div class="container contact-flex">
-        <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Kota Bharu & Seluruh Kelantan</span></div>
-        <div class="contact-item"><i class="fas fa-phone-alt"></i><span>010-944 1083 / 018-575 8533 / 011-3566 2786</span></div>
-        <div class="contact-item"><i class="fas fa-envelope"></i><span>tempahan@mrlucky.com</span></div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
+  <!-- Hero -->
+  <section class="hero-shop">
     <div class="container">
-      <p>© 2026 Khidmat Katering Kelantan · Air Balang Mewah, Kambing Golek & Manisan</p>
-      <div class="social-links">
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-tiktok"></i></a>
+      <div class="hero-content">
+        <span class="badge">🍢 KHIDMAT KATERING KELANTAN</span>
+        <h1>Air Balang Mewah<br>Kambing Golek & Manisan</h1>
+        <p>Khidmat sekitar seluruh Kelantan <strong>(kecuali Jeli, Gua Musang, Kuala Krai)</strong>.</p>
+        <div class="hero-search">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Cari menu kegemaran anda..." id="searchInput">
+        </div>
+        <div class="hero-contact">
+          <a href="tel:+60109441083" class="btn btn-primary"><i class="fas fa-phone-alt"></i> 010-944 1083</a>
+          <span>atau WhatsApp</span>
+        </div>
       </div>
     </div>
+  </section>
+
+  <!-- Category Pills -->
+  <section class="categories-section">
+    <div class="container">
+      <div class="category-pills" id="categoryPills"></div>
+    </div>
+  </section>
+
+  <!-- Menu Grid -->
+  <section id="menu" class="menu-shop">
+    <div class="container">
+      <div class="section-header-shop">
+        <h2>Menu Kami <span>🔥 Paling Popular</span></h2>
+      </div>
+      <div class="menu-grid-shop" id="menuGridShop"></div>
+    </div>
+  </section>
+
+  <!-- Checkout Section -->
+  <section id="contact" class="checkout-section">
+    <div class="container">
+      <div class="checkout-layout">
+        <div class="customer-form">
+          <h3>Maklumat Penghantaran / Majlis</h3>
+          <form id="orderForm">
+            <div class="form-row">
+              <input type="text" name="name" id="name" placeholder="Nama penuh *" required>
+              <input type="email" name="email" id="email" placeholder="Emel *" required>
+            </div>
+            <div class="form-row">
+              <input type="tel" name="phone" id="phone" placeholder="No. Telefon *" required>
+              <input type="text" name="location" id="location" placeholder="Daerah / Lokasi Majlis *" required>
+            </div>
+            <div class="form-row">
+              <input type="text" name="eventDate" id="eventDate" placeholder="Tarikh majlis (pilihan)">
+            </div>
+            <textarea name="notes" id="notes" rows="2" placeholder="Catatan khas / alamat penuh..."></textarea>
+            <input type="hidden" name="orderDetails" id="orderDetails">
+            <button type="submit" class="btn btn-primary btn-block">Hantar Tempahan <i class="fas fa-paper-plane"></i></button>
+            <div id="formStatus" class="form-status"></div>
+          </form>
+        </div>
+        <div class="order-summary-side">
+          <h3>Pesanan Anda <span id="cartCountSide">(0)</span></h3>
+          <div id="cartItemsSide" class="cart-items-side"><p class="empty-cart">Tiada item. Tambah menu di atas.</p></div>
+          <div class="cart-total-side"><span>Jumlah</span><span id="cartTotalSide">RM0</span></div>
+          <p class="cart-note"><i class="fas fa-info-circle"></i> Harga tepat selepas semakan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Bar -->
+  <section class="contact-bar">
+    <div class="container contact-flex">
+      <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Kelantan (kecuali Jeli, Gua Musang, Kuala Krai)</span></div>
+      <div class="contact-item"><i class="fas fa-phone-alt"></i><span>010-944 1083 / 018-575 8533 / 011-3566 2786</span></div>
+      <div class="contact-item"><i class="fas fa-envelope"></i><span>tempahan@mrlucky.com</span></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Mr. Lucky Catering · Air Balang, Kambing Golek & Manisan</p>
+      <p><i class="fas fa-phone-alt"></i> 010-944 1083</p>
+    </div>
   </footer>
+
+  <!-- Cart Drawer -->
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-drawer-header">
+      <h3>Bakul Anda</h3>
+      <button class="close-drawer" id="closeDrawer"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-drawer-items" id="cartDrawerItems"></div>
+    <div class="cart-drawer-footer">
+      <div class="drawer-total"><span>Jumlah</span><span id="drawerTotal">RM0</span></div>
+      <button class="btn btn-primary btn-block" id="checkoutDrawerBtn">Teruskan ke Borang <i class="fas fa-arrow-right"></i></button>
+    </div>
+  </div>
+  <div class="drawer-overlay" id="drawerOverlay"></div>
 
   <script src="js/script.js"></script>
 </body>

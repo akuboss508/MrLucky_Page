@@ -16,10 +16,7 @@
       padding: 20px;
       color: #1e1e1e;
     }
-    .container {
-      max-width: 1300px;
-      margin: 0 auto;
-    }
+    .container { max-width: 1300px; margin: 0 auto; }
     h1 {
       color: #e63946;
       margin-bottom: 24px;
@@ -34,18 +31,9 @@
       padding: 32px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.05);
     }
-    .login-panel {
-      max-width: 400px;
-      margin: 80px auto;
-    }
-    .form-group {
-      margin-bottom: 20px;
-    }
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
+    .login-panel { max-width: 400px; margin: 80px auto; }
+    .form-group { margin-bottom: 20px; }
+    label { display: block; margin-bottom: 8px; font-weight: 600; }
     input, select, textarea, button {
       font-family: inherit;
       font-size: 1rem;
@@ -75,13 +63,8 @@
       align-items: center;
       gap: 8px;
     }
-    button.secondary {
-      background: #6c757d;
-    }
-    button:hover {
-      background: #c1121f;
-      transform: translateY(-2px);
-    }
+    button.secondary { background: #6c757d; }
+    button:hover { background: #c1121f; transform: translateY(-2px); }
     .hidden { display: none !important; }
     .error { color: #c62828; margin-top: 8px; font-size: 0.9rem; }
     .success { color: #2e7d32; margin-top: 8px; font-size: 0.9rem; }
@@ -132,9 +115,7 @@
     }
     .actions i.fa-edit:hover { color: #e63946; }
     .actions i.fa-trash-alt:hover { color: #c62828; }
-    .refresh-btn {
-      margin-top: 20px;
-    }
+    .refresh-btn { margin-top: 20px; }
     @media (max-width: 700px) {
       .form-row { grid-template-columns: 1fr; }
       table { font-size: 0.9rem; }
@@ -158,7 +139,7 @@
       <p style="margin-top: 16px; color: #888; font-size: 0.9rem;">* Sila hubungi pemilik untuk kata laluan.</p>
     </div>
 
-    <!-- ADMIN PANEL (hidden until login) -->
+    <!-- ADMIN PANEL -->
     <div id="adminPanel" class="admin-panel hidden">
       <div class="admin-header">
         <h2>📋 Urus Menu</h2>
@@ -226,18 +207,12 @@
   </div>
 
   <script>
-    // ============================================================
-    // CONFIGURATION – GANTI DENGAN URL WEB APP ANDA
-    // ============================================================
     const API_URL = 'https://script.google.com/macros/s/AKfycbxU4FSnQ7K19pn4gOJdgP2l01lQ-G_QeuShFghmpXN5sFPSaFSToeolLg_Gq-ZVpIjD/exec';
-    const ADMIN_PASSWORD = 'lucky2024'; // Tukar jika perlu
+    const ADMIN_PASSWORD = 'lucky2024';
 
     let isLoggedIn = false;
     let currentItems = [];
 
-    // ============================================================
-    // LOGIN / LOGOUT
-    // ============================================================
     function login() {
       const pwd = document.getElementById('passwordInput').value;
       if (pwd === ADMIN_PASSWORD) {
@@ -258,14 +233,10 @@
       document.getElementById('loginError').innerText = '';
     }
 
-    // Enter key untuk login
     document.getElementById('passwordInput').addEventListener('keypress', (e) => {
       if (e.key === 'Enter') login();
     });
 
-    // ============================================================
-    // LOAD ITEMS DARI GOOGLE SHEET
-    // ============================================================
     async function loadItems() {
       try {
         const res = await fetch(API_URL);
@@ -274,7 +245,7 @@
         renderTable();
         updateCategoryDatalist();
       } catch (err) {
-        alert('⚠️ Gagal memuatkan data. Pastikan URL API betul dan sheet boleh diakses.');
+        alert('⚠️ Gagal memuatkan data. Pastikan URL API betul.');
         console.error(err);
       }
     }
@@ -305,9 +276,6 @@
       datalist.innerHTML = categories.map(c => `<option value="${c}">`).join('');
     }
 
-    // ============================================================
-    // FORM HANDLING
-    // ============================================================
     function clearForm() {
       document.getElementById('itemId').value = '';
       document.getElementById('itemName').value = '';
@@ -361,7 +329,6 @@
 
       try {
         const res = await fetch(API_URL, { method: 'POST', body: formData });
-        // (no-cors mode used in main site, but admin works with CORS if script returns JSON)
         const result = await res.json();
         if (result.success) {
           document.getElementById('formStatus').innerText = id ? '✅ Item dikemaskini!' : '✅ Item ditambah!';
@@ -373,12 +340,12 @@
         }
       } catch (err) {
         console.error(err);
-        alert('❌ Ralat semasa menyimpan. Pastikan Apps Script berfungsi.');
+        alert('❌ Ralat semasa menyimpan.');
       }
     }
 
     async function deleteItem(id) {
-      if (!confirm('Padam item ini? Tindakan tidak boleh dikembalikan.')) return;
+      if (!confirm('Padam item ini?')) return;
       const formData = new URLSearchParams();
       formData.append('action', 'delete');
       formData.append('id', id);
@@ -390,7 +357,6 @@
       }
     }
 
-    // Expose functions to global scope for onclick
     window.login = login;
     window.logout = logout;
     window.loadItems = loadItems;

@@ -9,7 +9,7 @@ let menuItems = [];
 let cart = [];
 let isAdmin = false;
 
-// DOM elements (existing)
+// DOM elements
 const menuGrid = document.getElementById('menuGridShop');
 const categoryPills = document.getElementById('categoryPills');
 const cartCountSpan = document.getElementById('cartCount');
@@ -219,21 +219,23 @@ function closeDrawer() {
 }
 
 // ============================================
-// FORM SUBMISSION
+// FORM SUBMISSION (with location dropdown, date & time)
 // ============================================
 function setupForm() {
   const form = document.getElementById('orderForm');
   const statusDiv = document.getElementById('formStatus');
+  
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     
-    const locationInput = document.getElementById('location');
-    const locationValue = locationInput.value.trim().toLowerCase();
-    const excluded = ['jeli', 'gua musang', 'kuala krai', 'guamusang', 'kualakrai'];
-    if (excluded.some(d => locationValue.includes(d))) {
-      const msg = `Maaf, kawasan ${locationInput.value} tidak diliputi. Kami hanya beroperasi di Kelantan kecuali Jeli, Gua Musang, Kuala Krai.\n\nTekan OK jika anda pasti lokasi ini dalam liputan, atau Batal untuk ubah.`;
+    const locationSelect = document.getElementById('location');
+    const selectedLocation = locationSelect.value;
+    const excluded = ['Jeli', 'Kuala Krai', 'Gua Musang'];
+    
+    if (excluded.includes(selectedLocation)) {
+      const msg = `Maaf, kawasan ${selectedLocation} mungkin tidak diliputi sepenuhnya. Sila hubungi 010-944 1083 untuk pengesahan.\n\nTekan OK jika anda telah berhubung dengan kami, atau Batal untuk pilih lokasi lain.`;
       if (!confirm(msg)) {
-        locationInput.focus();
+        locationSelect.focus();
         return;
       }
     }
@@ -242,17 +244,23 @@ function setupForm() {
       statusDiv.innerHTML = '<span class="error">⚠️ Sila tambah item ke bakul.</span>';
       return;
     }
+    
     statusDiv.innerHTML = '<span style="color:#e63946;">Menghantar...</span>';
+    
+    const eventTime = document.getElementById('eventTime').value || 'Tidak dinyatakan';
+    
     const formData = {
       name: document.getElementById('name').value,
       email: document.getElementById('email').value,
       phone: document.getElementById('phone').value,
-      location: document.getElementById('location').value,
+      location: selectedLocation,
       eventDate: document.getElementById('eventDate').value || 'Tidak dinyatakan',
+      eventTime: eventTime,
       notes: document.getElementById('notes').value || 'Tiada',
       orderDetails: orderDetailsInput.value,
       timestamp: new Date().toLocaleString('ms-MY')
     };
+    
     fetch(API_URL, {
       method: 'POST',
       mode: 'no-cors',
@@ -400,7 +408,7 @@ function setupUI() {
     filterAndRender(activeCat);
   });
 
-  // Direct admin login trigger (click "Admin" link in footer)
+  // Direct admin login trigger
   adminTrigger.addEventListener('click', (e) => {
     e.preventDefault();
     loginModalOverlay.classList.add('active');

@@ -86,10 +86,23 @@
             </div>
             <div class="form-row">
               <input type="tel" name="phone" id="phone" placeholder="No. Telefon *" required>
-              <input type="text" name="location" id="location" placeholder="Daerah / Lokasi Majlis *" required>
+              <select name="location" id="location" required>
+                <option value="">-- Pilih Daerah / Lokasi * --</option>
+                <option value="Kota Bharu">Kota Bharu</option>
+                <option value="Bachok">Bachok</option>
+                <option value="Pasir Mas">Pasir Mas</option>
+                <option value="Tumpat">Tumpat</option>
+                <option value="Pasir Puteh">Pasir Puteh</option>
+                <option value="Machang">Machang</option>
+                <option value="Tanah Merah">Tanah Merah</option>
+                <option value="Jeli">Jeli (terhad)</option>
+                <option value="Kuala Krai">Kuala Krai (terhad)</option>
+                <option value="Gua Musang">Gua Musang (terhad)</option>
+              </select>
             </div>
             <div class="form-row">
-              <input type="text" name="eventDate" id="eventDate" placeholder="Tarikh majlis (pilihan)">
+              <input type="date" name="eventDate" id="eventDate" placeholder="Tarikh majlis">
+              <input type="time" name="eventTime" id="eventTime" placeholder="Masa majlis">
             </div>
             <textarea name="notes" id="notes" rows="2" placeholder="Catatan khas / alamat penuh..."></textarea>
             <input type="hidden" name="orderDetails" id="orderDetails">

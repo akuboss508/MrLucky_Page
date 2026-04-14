@@ -116,11 +116,13 @@
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Footer (with hidden admin trigger) -->
   <footer class="footer">
     <div class="container">
       <p>© 2026 Mr. Lucky Catering · Air Balang, Kambing Golek & Manisan</p>
-      <p><i class="fas fa-phone-alt"></i> 010-944 1083</p>
+      <p><i class="fas fa-phone-alt"></i> 010-944 1083 · 
+        <span id="adminTrigger" style="cursor:default; opacity:0.4;" title="Admin">🔒</span>
+      </p>
     </div>
   </footer>
 
@@ -137,6 +139,57 @@
     </div>
   </div>
   <div class="drawer-overlay" id="drawerOverlay"></div>
+
+  <!-- Admin Login Modal -->
+  <div class="modal-overlay" id="loginModalOverlay">
+    <div class="modal">
+      <button class="modal-close" id="closeLoginModal">&times;</button>
+      <h3>🔐 Admin Login</h3>
+      <input type="password" id="adminPassword" placeholder="Kata laluan" class="modal-input">
+      <button class="btn btn-primary btn-block" id="loginBtn">Log Masuk</button>
+      <div id="loginError" class="error"></div>
+    </div>
+  </div>
+
+  <!-- Admin Panel Modal -->
+  <div class="modal-overlay" id="adminPanelOverlay">
+    <div class="modal admin-modal">
+      <button class="modal-close" id="closeAdminPanel">&times;</button>
+      <h3>📋 Urus Menu</h3>
+      <div class="admin-form">
+        <input type="hidden" id="adminItemId">
+        <div class="form-row">
+          <input type="text" id="adminItemName" placeholder="Nama Item *">
+          <input type="text" id="adminItemCategory" placeholder="Kategori *" list="adminCategoryList">
+          <datalist id="adminCategoryList"></datalist>
+        </div>
+        <div class="form-row">
+          <input type="number" id="adminItemPrice" placeholder="Harga (RM) *" step="0.01" min="0">
+          <input type="number" id="adminItemMinQty" placeholder="Min. Order" value="1" min="1">
+        </div>
+        <textarea id="adminItemDesc" rows="2" placeholder="Deskripsi"></textarea>
+        <div class="image-upload-area">
+          <input type="text" id="adminItemImage" placeholder="URL Gambar (atau muat naik)">
+          <label for="imageUpload" class="btn btn-outline" style="padding:10px 16px;"><i class="fas fa-cloud-upload-alt"></i> Muat Naik</label>
+          <input type="file" id="imageUpload" accept="image/*" style="display:none;">
+        </div>
+        <div id="uploadStatus" class="success" style="margin-top:8px;"></div>
+        <div style="display:flex; gap:12px; margin-top:16px;">
+          <button class="btn btn-primary" id="saveAdminItem">Simpan</button>
+          <button class="btn btn-outline" id="cancelAdminForm">Batal</button>
+        </div>
+      </div>
+      <hr style="margin:20px 0;">
+      <h4>📌 Senarai Menu</h4>
+      <div style="max-height:300px; overflow-y:auto;">
+        <table class="admin-table">
+          <thead><tr><th>Nama</th><th>Harga</th><th></th></tr></thead>
+          <tbody id="adminItemsTable"></tbody>
+        </table>
+      </div>
+      <button class="btn btn-outline" id="refreshAdminItems" style="margin-top:16px;"><i class="fas fa-sync-alt"></i> Refresh</button>
+    </div>
+  </div>
 
   <script src="js/script.js"></script>
 </body>
